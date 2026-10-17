@@ -21,6 +21,23 @@ public class SistemaLoginDicionario {
 
         try (Scanner scanner = new Scanner(System.in)) {
             boolean loginSucesso = false;
+            boolean sair = false;
+
+            while (!sair) {
+                System.out.println("=== MENU ===");
+                System.out.println("1. Cadastrar novo usuário");
+                System.out.println("2. Fazer login");
+                System.out.print("Escolha uma opção: ");
+                String opcao = scanner.nextLine();
+
+                if (opcao.equals("1")) {
+                    cadastrarUsuario(scanner, usuariosCadastrados);
+                } else if (opcao.equals("2")) {
+                    sair = true;
+                } else {
+                    System.out.println("Opção inválida. Tente novamente.");
+                }
+            }
 
             while (!loginSucesso) {
                 System.out.println("=== TELA DE LOGIN ===");
@@ -40,5 +57,22 @@ public class SistemaLoginDicionario {
                 }
             }
         }
+    }
+
+    private static void cadastrarUsuario(Scanner scanner, Map<String, String> usuariosCadastrados) {
+        System.out.println("=== CADASTRO DE USUÁRIO ===");
+        System.out.print("Digite o nome do usuário: ");
+        String novoUsuario = scanner.nextLine();
+
+        if (usuariosCadastrados.containsKey(novoUsuario)) {
+            System.out.println("Usuário já cadastrado. Tente novamente.");
+            return;
+        }
+
+        System.out.print("Digite a senha: ");
+        String novaSenha = scanner.nextLine();
+
+        usuariosCadastrados.put(novoUsuario, novaSenha);
+        System.out.println("Usuário cadastrado com sucesso!");
     }
 }
